@@ -2,13 +2,6 @@ name: pr-build
 on:
   pull_request:
     branches: [ main ]
-    paths-ignore:
-      - '*.md'
-      - '.gitignore'
-      - 'cve-suppressed.xml'
-      - '.github/**'
-      - 'renovate.json'
-  workflow_dispatch:
 
 jobs:
   pr-build:
