@@ -8,10 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Upload artifacts
-        if: ${{ inputs.artifactType == 'library'}}
         uses: actions/upload-artifact@v4
         with:
           retention-days: 2
           name: coverage
-          path: |
-            src/main/1Link
+          path: src/main/1Link
