@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: microcks/import-github-action@v1
         with:
-          specificationFiles: '/src/main/1Link/ibft_push.yaml:true,/src/main/1Link/oauth.yaml:true,/src/main/1Link/title_fetch.yaml:true'
+          specificationFiles: 'src/main/1Link/ibft_push.yaml:true, src/main/1Link/oauth.yaml:true, src/main/1Link/title_fetch.yaml:true'
           microcksURL: 'https://microcks.dbank.engineering/api/'
           keycloakClientId:  'microcks-serviceaccount'
           keycloakClientSecret:  'ab54d329-e435-41ae-a900-ec6b3fe15c54'
