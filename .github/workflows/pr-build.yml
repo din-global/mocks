@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Upload artifacts
-        if: ${{ inputs.artifactType == 'service'}}
+        if: ${{ inputs.artifactType == 'library'}}
         uses: actions/upload-artifact@v4
         with:
           retention-days: 2
