@@ -12,4 +12,4 @@ jobs:
         with:
           retention-days: 2
           name: coverage
-          path: src/main/1Link
+          path: src/main/1Link/ibft_push.yaml
