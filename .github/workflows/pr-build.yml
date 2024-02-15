@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: src/main/1Link
+        working-directory: ./src/main/1Link
     steps:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
