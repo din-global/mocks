@@ -1,0 +1,24 @@
+name: pr-build
+on:
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '*.md'
+      - '.gitignore'
+      - 'cve-suppressed.xml'
+      - '.github/**'
+      - 'renovate.json'
+  workflow_dispatch:
+
+jobs:
+  pr-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload artifacts
+        if: ${{ inputs.artifactType == 'service'}}
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 2
+          name: coverage
+          path: |
+            src/main/1Link
