@@ -7,16 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: Development
     steps:
-      - uses: actions/upload-artifact@v4
-        with:
-            retention-days: 2
-            name: coverage
-            path: |
-              src/main/1Link
-
       - uses: microcks/import-github-action@v1
         with:
-          specificationFiles: 'src/main/1Link/ibft_push.yaml:true'
+          specificationFiles: 'https://github.com/din-global/mocks/blob/main/src/main/1Link/ibft_push.yaml:true'
           microcksURL: 'https://microcks.dbank.engineering/api/'
           keycloakClientId:  'microcks-serviceaccount'
           keycloakClientSecret:  'ab54d329-e435-41ae-a900-ec6b3fe15c54'
