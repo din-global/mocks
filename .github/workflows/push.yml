@@ -11,15 +11,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Package YAML files
-        run: |
-          mkdir artifacts
-          cp src/main/*/*.yaml artifacts/
-
       - name: List YAML files and set environment variable
         run: |
           SPEC_FILES=""
-          for file in $(find artifacts -type f -name "*.yaml"); do
+          for file in $(find src/main/*/*.yaml -type f -name "*.yaml"); do
             filename=$(basename $file)
             SPEC_FILES="$SPEC_FILES,artifacts/${filename}:true"
           done
