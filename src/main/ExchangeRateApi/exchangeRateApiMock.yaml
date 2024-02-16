@@ -1,0 +1,166 @@
+openapi: 3.0.2
+info:
+  title: Exchange Rate API
+  version: 1.0.0
+  description: API definition for retrieving currency exchange rates
+  contact:
+    name: Shozab
+    email: your.email@example.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+paths:
+  /v6/{apiKey}/pair/{from}/{to}/{srcAmount}:
+    get:
+      summary: Retrieve Currency Exchange Rate
+      description: |
+        Retrieves the exchange rate for converting an amount from one currency to another.
+      parameters:
+        - name: apiKey
+          in: path
+          description: The API key for the exchange rate service.
+          required: true
+          schema:
+            type: string
+          examples:
+            happyFlow:
+              value: "exchangeRateApiKey"
+            sadFlow:
+              value: "exchangeRateApiKey"
+            forbiddenFlow:
+              value: "wrongApiKey"
+        - name: from
+          in: path
+          description: The currency code to convert from.
+          required: true
+          schema:
+            type: string
+          examples:
+            happyFlow:
+              value: "USD"
+            sadFlow:
+              value: "ERR"
+            forbiddenFlow:
+              value: "USD"
+        - name: to
+          in: path
+          description: The currency code to convert to.
+          required: true
+          schema:
+            type: string
+          examples:
+            happyFlow:
+              value: "EUR"
+            sadFlow:
+              value: "EUR"
+            forbiddenFlow:
+              value: "EUR"
+        - name: srcAmount
+          in: path
+          description: The amount in the source currency to convert.
+          required: true
+          schema:
+            type: number
+          examples:
+            happyFlow:
+              value: 100.0
+            sadFlow:
+              value: 100.0
+            forbiddenFlow:
+              value: 100.0
+      responses:
+        '200':
+          description: Successful response containing the exchange rate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRateApiResponseDto'
+              examples:
+                happyFlow:
+                  value:
+                      {
+                        "result": "success",
+                        "documentation": "https://www.exchangerate-api.com/docs",
+                        "terms_of_use": "https://www.exchangerate-api.com/terms",
+                        "time_last_update_unix": 1585267200,
+                        "time_last_update_utc": "Fri, 27 Mar 2020 00:00:00 +0000",
+                        "time_next_update_unix": 1585270800,
+                        "time_next_update_utc": "Sat, 28 Mar 2020 01:00:00 +0000",
+                        "base_code": "EUR",
+                        "target_code": "GBP",
+                        "conversion_rate": 0.8412,
+                        "conversion_result": 5.8884
+                      }
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRateApiErrorResponseDto'
+              examples:
+                sadFlow:
+                  value:
+                    {
+                      "result":"error",
+                      "documentation":"https://www.exchangerate-api.com/docs",
+                      "terms-of-use":"https://www.exchangerate-api.com/terms",
+                      "error-type":"unsupported-code"
+                    }
+        '403':
+          description: The request was forbidden because of wrong apiKey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRateApiErrorResponseDto'
+              examples:
+                forbiddenFlow:
+                  value:
+                    {
+                      "result":"error",
+                      "documentation":"https://www.exchangerate-api.com/docs",
+                      "terms-of-use":"https://www.exchangerate-api.com/terms",
+                      "error-type":"invalid-key"
+                    }
+components:
+  schemas:
+    ExchangeRateApiResponseDto:
+      type: object
+      properties:
+        result:
+          type: string
+        documentation:
+          type: string
+        terms_of_use:
+          type: string
+        time_last_update_unix:
+          type: integer
+        time_last_update_utc:
+          type: string
+        time_next_update_unix:
+          type: integer
+        time_next_update_utc:
+          type: string
+        base_code:
+          type: string
+        target_code:
+          type: string
+        conversion_rate:
+          type: number
+        conversion_result:
+          type: number
+
+    ExchangeRateApiErrorResponseDto:
+      type: object
+      properties:
+        result:
+          type: string
+        documentation:
+          type: string
+        terms_of_use:
+            type: string
+        error-type:
+          type: string
+
+  tags:
+    - name: exchangeRateApi
+      description:
