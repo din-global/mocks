@@ -27,13 +27,12 @@ jobs:
       - name: List YAML files
         id: list_yaml
         run: |
-          echo "::set-output name=SPEC_FILES::$(find artifacts -type f -name "*.yaml" -printf "%P,true," | sed 's/,$//')"
-        shell: bash
+          echo $(find artifacts -type f -name "*.yaml" -printf "%P,true," | sed 's/,$//') >> $GITHUB_ENV
 
       - name: Import YAML files into Microcks
         uses: microcks/import-github-action@v1
         with:
-          specificationFiles: ${{ steps.list_yaml.outputs.SPEC_FILES }}
+          specificationFiles: ${{ env.SPEC_FILES }}
           microcksURL: 'https://microcks.dbank.engineering/api/'
           keycloakClientId:  'microcks-serviceaccount'
           keycloakClientSecret:  'ab54d329-e435-41ae-a900-ec6b3fe15c54'
