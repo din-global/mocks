@@ -24,9 +24,15 @@ jobs:
           name: my_project_artifact
           path: my_project_artifact.zip
 
+      - name: List YAML files
+        run: |
+          SPEC_FILES=$(find artifacts -type f -name "*.yaml" -printf "%P,true," | sed 's/,$//')
+          echo "Specification files: $SPEC_FILES"
+          echo "::set-env name=SPEC_FILES::$SPEC_FILES"
+
       - uses: microcks/import-github-action@v1
         with:
-          specificationFiles: 'artifacts/ibft_push.yaml:true,artifacts/oauth.yaml:true,artifacts/title_fetch.yaml:true'
+          specificationFiles: ${{ env.SPEC_FILES }}
           microcksURL: 'https://microcks.dbank.engineering/api/'
           keycloakClientId:  'microcks-serviceaccount'
           keycloakClientSecret:  'ab54d329-e435-41ae-a900-ec6b3fe15c54'
