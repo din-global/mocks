@@ -26,7 +26,7 @@ jobs:
 
       - uses: microcks/import-github-action@v1
         with:
-          specificationFiles: 'artifacts/ibft_push.yaml:true'
+          specificationFiles: 'artifacts/*:true'
           microcksURL: 'https://microcks.dbank.engineering/api/'
           keycloakClientId:  'microcks-serviceaccount'
           keycloakClientSecret:  'ab54d329-e435-41ae-a900-ec6b3fe15c54'
