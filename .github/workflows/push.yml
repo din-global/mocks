@@ -12,7 +12,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: List YAML files and set environment variable
-        run: SPEC_FILES=$(echo src/main/*/*.yaml | tr ' ' ',' | sed 's/,$//')
+        run: | 
+            SPEC_FILES=$(echo src/main/*/*.yaml | tr ' ' ',' | sed 's/,$//')
+            echo "SPEC_FILES=${SPEC_FILES}" >> $GITHUB_ENV
+
 
       - name: Import YAML files into Microcks
         uses: microcks/import-github-action@v1
