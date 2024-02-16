@@ -1,0 +1,166 @@
+openapi: 3.0.2
+info:
+  title: Exchange Rate Host
+  version: 1.0.0
+  description: API definition for retrieving currency exchange rates
+  contact:
+    name: Shozab
+    email: your.email@example.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+paths:
+  /convert:
+    get:
+      summary: Retrieve Currency Exchange Rate
+      description: |
+        Retrieves the exchange rate for converting an amount from one currency to another.
+      parameters:
+        - name: access_key
+          in: query
+          description: The API key for the exchange rate host service.
+          required: true
+          schema:
+            type: string
+          examples:
+            happyFlow:
+              value: "exchangeRateHostKey"
+            sadFlow:
+              value: "exchangeRateHostKey"
+            forbiddenFlow:
+              value: "wrongAccessKey"
+        - name: from
+          in: query
+          description: The currency code to convert from.
+          required: true
+          schema:
+            type: string
+          examples:
+            happyFlow:
+              value: "USD"
+            sadFlow:
+              value: "ERR"
+            forbiddenFlow:
+              value: "USD"
+        - name: to
+          in: query
+          description: The currency code to convert to.
+          required: true
+          schema:
+            type: string
+          examples:
+            happyFlow:
+              value: "EUR"
+            sadFlow:
+              value: "EUR"
+            forbiddenFlow:
+              value: "EUR"
+        - name: amount
+          in: query
+          description: The amount in the source currency to convert.
+          required: true
+          schema:
+            type: number
+          examples:
+            happyFlow:
+              value: 100.0
+            sadFlow:
+              value: 100.0
+            forbiddenFlow:
+              value: 100.0
+      responses:
+        '200':
+          description: Successful response containing the exchange rate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRateHostResponseDto'
+              examples:
+                happyFlow:
+                  value:
+                    {
+                      "success": true,
+                      "terms": "https://exchangerate.host/terms",
+                      "privacy": "https://exchangerate.host/privacy",
+                      "query": {
+                        "from": "USD",
+                        "to": "GBP",
+                        "amount": 10
+                      },
+                      "info": {
+                        "timestamp": 1430068515,
+                        "quote": 0.658443
+                      },
+                      "result": 6.58443
+                    }
+        '401':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRateHostErrorResponseDto'
+              examples:
+                sadFlow:
+                  value:
+                    {
+                      "success": false,
+                      "error": {
+                        "code": 401,
+                        "info": 'User entered an invalid "from" property.'
+                      }
+                    }
+                forbiddenFlow:
+                  value:
+                    {
+                      "success": false,
+                      "error": {
+                        "code": 101,
+                        "info": 'User did not supply an access key or supplied an invalid access key.'
+                      }
+                    }
+components:
+  schemas:
+    ExchangeRateHostResponseDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        terms:
+          type: string
+        privacy:
+          type: string
+        query:
+          type: object
+          properties:
+            from:
+              type: string
+            to:
+              type: string
+            amount:
+              type: number
+        info:
+          type: object
+          properties:
+            timestamp:
+              type: number
+            quote:
+              type: number
+        result:
+          type: number
+
+    ExchangeRateHostErrorResponseDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+            info:
+              type: string
+
+  tags:
+    - name: exchangeRateHost
+      description:
