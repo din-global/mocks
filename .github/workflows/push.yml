@@ -14,7 +14,7 @@ jobs:
       - name: Package YAML files
         run: |
           mkdir artifacts
-          cp src/main/1Link/*.yaml artifacts/
+          cp src/main/*/*.yaml artifacts/
           zip -r my_project_artifact.zip artifacts
           echo "Artifact created: my_project_artifact.zip"
 
