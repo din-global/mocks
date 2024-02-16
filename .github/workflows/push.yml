@@ -29,9 +29,8 @@ jobs:
           SPEC_FILES=""
           for file in $(find artifacts -type f -name "*.yaml"); do
             filename=$(basename "$file")
-            SPEC_FILES="$SPEC_FILES${filename//_/-}:true,"
+            SPEC_FILES="artifact/$SPEC_FILES${filename//_/-}:true,"
           done
-          echo "SPEC_FILES=${SPEC_FILES%,}" >> $GITHUB_ENV
 
       - name: Import YAML files into Microcks
         uses: microcks/import-github-action@v1
