@@ -29,7 +29,7 @@ jobs:
           SPEC_FILES=""
           for file in $(find artifacts -type f -name "*.yaml"); do
             filename=$(basename $file)
-            SPEC_FILES="$SPEC_FILES,artifact/${filename//_/-}:true"
+            SPEC_FILES="$SPEC_FILES,artifact/${filename}:true"
           done
           # Removing leading comma
           SPEC_FILES=${SPEC_FILES#,}
