@@ -24,10 +24,10 @@ jobs:
           name: my_project_artifact
           path: my_project_artifact.zip
 
-      - name: List YAML files
-        id: list_yaml
+      - name: List YAML files and set environment variable
         run: |
-          echo $(find artifacts -type f -name "*.yaml" -printf "%P,true," | sed 's/,$//') >> $GITHUB_ENV
+          SPEC_FILES=$(find artifacts -type f -name "*.yaml" -printf "%P,true," | sed 's/,$//')
+          echo "SPEC_FILES=$SPEC_FILES" >> $GITHUB_ENV
 
       - name: Import YAML files into Microcks
         uses: microcks/import-github-action@v1
