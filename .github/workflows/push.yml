@@ -18,12 +18,6 @@ jobs:
           zip -r my_project_artifact.zip artifacts
           echo "Artifact created: my_project_artifact.zip"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: my_project_artifact
-          path: my_project_artifact.zip
-
       - name: List YAML files and set environment variable
         run: |
           SPEC_FILES=""
