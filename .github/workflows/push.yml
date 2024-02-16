@@ -7,6 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     environment: Development
     steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Package YAML files
+        run: |
+          mkdir artifacts
+          cp src/test/resources/*.yaml artifacts/
+          zip -r my_project_artifact.zip artifacts
+          echo "Artifact created: my_project_artifact.zip"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my_project_artifact
+          path: my_project_artifact.zip
+
       - uses: microcks/import-github-action@v1
         with:
           specificationFiles: 'ibft_push.yaml:true'
