@@ -28,8 +28,8 @@ jobs:
         run: |
           SPEC_FILES=""
           for file in $(find artifacts -type f -name "*.yaml"); do
-            filename=$(basename "artifact/$file")
-            SPEC_FILES="$SPEC_FILES${filename//_/-}:true,"
+            filename=$(basename "$file")
+            SPEC_FILES="$SPEC_FILESartifact/${filename//_/-}:true,"
           done
           echo "SPEC_FILES=${SPEC_FILES%,}" >> $GITHUB_ENV
 
